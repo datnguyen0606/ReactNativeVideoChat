@@ -29,6 +29,7 @@ export default class Home extends Component {
             autoCapitalize="none"
             value={this.props.room}
             onChange={this.props.onRomChanged}
+            placeholderTextColor="#808080"
             placeholder='Please enter a room name.'/>
         </View>
         <View style={styles.flowRight}>

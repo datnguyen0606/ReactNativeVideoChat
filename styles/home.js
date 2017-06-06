@@ -1,20 +1,22 @@
 import { StyleSheet } from 'react-native';
+import normalize from '../src/utils/normalizeText';
+
 
 export default StyleSheet.create({
   homeContainer: {
-    padding: 30,
-    paddingTop: 65,
+    padding: normalize(30),
+    paddingTop: normalize(65),
     alignItems: 'center'
   },
   description: {
-    marginBottom: 20,
-    fontSize: 17,
+    marginBottom: normalize(15),
+    fontSize: normalize(17),
     textAlign: 'center',
     color: '#eee'
   },
   header: {
-    marginBottom: 20,
-    fontSize: 28,
+    marginBottom: normalize(20),
+    fontSize: normalize(28),
     textAlign: 'center',
     color: '#eee',
     fontWeight: 'bold'
@@ -25,30 +27,30 @@ export default StyleSheet.create({
     alignSelf: 'stretch'
   },
   searchInput: {
-    height: 36,
-    paddingLeft: 10,
+    height: normalize(36),
+    paddingLeft: normalize(10),
     flex: 1,
-    fontSize: 16,
+    fontSize: normalize(16),
     borderBottomColor: '#4c4c4f',
     borderBottomWidth: 2,
     color: '#eee'
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: normalize(16),
     color: '#eee',
     alignSelf: 'center'
   },
   button: {
-    height: 36,
+    height: normalize(36),
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#4285f4',
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: normalize(10),
+    marginTop: normalize(15),
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
   empty: {
-    width: 10
+    width: normalize(10)
   }
 });

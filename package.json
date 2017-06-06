@@ -9,7 +9,10 @@
   "dependencies": {
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.2",
+    "react-native-svg": "^5.1.8",
     "react-native-webrtc": "^1.57.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.6.0",
     "socket.io-client": "^2.0.2"
   },
   "devDependencies": {

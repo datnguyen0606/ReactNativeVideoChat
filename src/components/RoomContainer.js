@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableHighlight } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
 import { RTCView } from 'react-native-webrtc';
 import styles from "../../styles/video.js";
 import hstyles from "../../styles/home.js";
 
 import { Platform } from 'react-native';
+import MediaControl from "./MediaControl.js"
 
-export default class Home extends Component {
+export default class RoomContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      message: ""
-    };
   }
 
   render() {
     const local_style = this.props.remoteVideoSrc ? styles.thumbnail : styles.fullContainer;
     return (
-      <View style={styles.fullContainer}>
+    <TouchableWithoutFeedback style={styles.fullContainer} onPress={this.props.toggleControl}>
+      <View style={styles.fullContainer} onPress={this.props.toggleControl}>
         <RTCView
           mirror={true}
           streamURL={this.props.localVideoSrc}
@@ -26,6 +25,16 @@ export default class Home extends Component {
         {this.props.connection == "established" ?
           (
             <RTCView streamURL={this.props.remoteVideoSrc} style={styles.fullContainer} />
+          ) : null }
+
+        {this.props.showControl ? (
+          <MediaControl
+            audio={this.props.audio}
+            video={this.props.video}
+            swapCamera={this.props.swapCamera}
+            toggleAudio={this.props.toggleAudio}
+            toggleVideo={this.props.toggleVideo}
+            hangUp={this.props.hangUp} />
           ) : null }
 
         {this.props.connection == "join" ?
@@ -75,6 +84,7 @@ export default class Home extends Component {
           ) : null }
 
       </View>
+    </TouchableWithoutFeedback>
     );
   }
 }

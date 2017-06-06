@@ -15,106 +15,6 @@ function logError(error) {
   console.log("logError", error);
 }
 
-// export function findRoom(room) {
-//   socket.emit('find', room);
-// }
-
-// export function createPC(handler) {
-//   const configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
-//   const pc = new RTCPeerConnection(configuration);
-//   // pcPeers[socketId] = pc;
-
-//   pc.onicecandidate = function(e) {
-//     console.log(e, 'onicecandidate');
-//     if (e.candidate) {
-//       socket.send({
-//         type: 'candidate',
-//         mlineindex: e.candidate.sdpMLineIndex,
-//         candidate: e.candidate.candidate
-//       });
-//     }
-//   };
-
-//   // function createOffer() {
-//   //   pc.createOffer(function(desc) {
-//   //     console.log('createOffer', desc);
-//   //     pc.setLocalDescription(desc, function () {
-//   //       console.log('setLocalDescription', pc.localDescription);
-//   //       socket.emit('exchange', {'to': socketId, 'sdp': pc.localDescription });
-//   //     }, logError);
-//   //   }, logError);
-//   // }
-
-//   // pc.onnegotiationneeded = function () {
-//   //   console.log('onnegotiationneeded');
-//   //   createOffer();
-//   // }
-
-//   // pc.oniceconnectionstatechange = function(event) {
-//   //   console.log('oniceconnectionstatechange', event.target.iceConnectionState);
-//   //   if (event.target.iceConnectionState === 'completed') {
-//   //     setTimeout(() => {
-//   //       getStats();
-//   //     }, 1000);
-//   //   }
-//   //   if (event.target.iceConnectionState === 'connected') {
-//   //     createDataChannel();
-//   //   }
-//   // };
-
-//   pc.onsignalingstatechange = function(event) {
-//     console.log('onsignalingstatechange', event.target.signalingState);
-//   };
-
-//   pc.onaddstream = function (e) {
-//     console.log('onaddstream', e);
-//     remoteStream = e.stream;
-//     remoteVideoSrc = remoteStream.toURL();
-//     handler.establish(remoteVideoSrc)
-//     //this.setState({bridge: 'established'});
-
-
-//     // container.setState({info: 'One peer join!'});
-
-//     // const remoteList = container.state.remoteList;
-//     // remoteList[socketId] = e.stream.toURL();
-//     // container.setState({ remoteList: remoteList });
-//   };
-
-//   pc.onremovestream = function (e) {
-//     console.log('onremovestream', e.stream);
-//   };
-
-//   pc.addStream(localStream);
-//   function createDataChannel() {
-//     if (pc.textDataChannel) {
-//       return;
-//     }
-//     const dataChannel = pc.createDataChannel("text");
-
-//     dataChannel.onerror = function (error) {
-//       console.log("dataChannel.onerror", error);
-//     };
-
-//     dataChannel.onmessage = function (event) {
-//       console.log("dataChannel.onmessage:", event.data);
-//       container.receiveTextData({user: socketId, message: event.data});
-//     };
-
-//     dataChannel.onopen = function () {
-//       console.log('dataChannel.onopen');
-//       container.setState({textRoomConnected: true});
-//     };
-
-//     dataChannel.onclose = function () {
-//       console.log("dataChannel.onclose");
-//     };
-
-//     pc.textDataChannel = dataChannel;
-//   }
-//   return pc;
-// }
-
 function sendData(msg) {
   dc.send(JSON.stringify(msg));
 }
@@ -147,9 +47,7 @@ export function initPC(state, socket, localStream, callback) {
   socket.on('message', (message) => {
     if (message.type === 'offer') {
       // set remote description and answer
-      console.log("---here 1---");
       pc.setRemoteDescription(new RTCSessionDescription(message), function () {
-        console.log("---here 2---");
         pc.createAnswer(function(desc) {
           console.log('createAnswer', desc);
           pc.setLocalDescription(desc, function () {
@@ -202,9 +100,9 @@ export function initPC(state, socket, localStream, callback) {
   };
   // when the other side added a media stream, show it on screen
   pc.onaddstream = e => {
-    console.log('onaddstream', e)
+    console.log('onaddstream', e);
     remoteStream = e.stream;
-    callback(remoteStream.toURL());
+    callback(remoteStream);
   };
   pc.ondatachannel = e => {
     // data channel
@@ -222,6 +120,8 @@ export function initPC(state, socket, localStream, callback) {
   if (state.user === 'host') {
     getLocalStream(state.isFront, attachMediaIfReady)
   }
+
+  return pc;
 }
 
 export function getLocalStream(isFront, callback) {

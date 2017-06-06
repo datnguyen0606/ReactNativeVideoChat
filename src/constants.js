@@ -1,0 +1,4 @@
+export const UPDATE_CONNECTION = 'UPDATE_CONNECTION';
+export const CHANGE_ROOM = 'CHANGE_ROOM';
+export const SHOW_CONTROL = 'SHOW_CONTROL';
+export const INIT_STATE = 'INIT_STATE';
