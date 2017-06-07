@@ -39,11 +39,9 @@ export default class RoomContainer extends Component {
 
         {this.props.connection == "join" ?
           (
-            <View style={styles.invitationSection}>
+            <View style={[styles.invitationSection, hstyles.separator]}>
               <Text style={styles.inputLabel}>Send an invitation to join the room.</Text>
               <TextInput
-                multiline = {true}
-                numberOfLines = {1}
                 style={hstyles.searchInput}
                 clearButtonMode="always"
                 autoCorrect={false}

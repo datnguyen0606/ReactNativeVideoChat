@@ -189,25 +189,18 @@ class App extends Component {
             onJoinPressed={this.onJoinPressed}
             onRandomPressed={this.onRandomPressed} />
           ) :
-
-          (this.props.connection == "connecting" ?
-            (
-              <View style={styles.indicator}>
-                <ActivityIndicator size='large'/>
-              </View>
-            ) :
-            (<RoomContainer
-              {...this.props}
-              onInvitationChanged={this.onInvitationChanged}
-              sendInvitation={this.sendInvitation}
-              acceptInvitation={this.acceptInvitation}
-              rejectInvitation={this.rejectInvitation}
-              toggleControl={this.toggleControl}
-              toggleAudio={this.toggleAudio}
-              toggleVideo={this.toggleVideo}
-              swapCamera={this.swapCamera}
-              hangUp={this.hangUp} />
-            ))
+          (<RoomContainer
+            {...this.props}
+            onInvitationChanged={this.onInvitationChanged}
+            sendInvitation={this.sendInvitation}
+            acceptInvitation={this.acceptInvitation}
+            rejectInvitation={this.rejectInvitation}
+            toggleControl={this.toggleControl}
+            toggleAudio={this.toggleAudio}
+            toggleVideo={this.toggleVideo}
+            swapCamera={this.swapCamera}
+            hangUp={this.hangUp} />
+          )
         }
       </View>
     );

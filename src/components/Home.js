@@ -19,10 +19,8 @@ export default class Home extends Component {
           Please enter a room name.
         </Text>
 
-        <View style={styles.flowRight}>
+        <View style={[styles.flowRight, styles.separator]}>
           <TextInput
-            multiline = {true}
-            numberOfLines = {1}
             style={styles.searchInput}
             clearButtonMode="always"
             autoCorrect={false}

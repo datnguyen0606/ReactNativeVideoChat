@@ -25,13 +25,15 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch'
   },
+  separator: {
+    borderBottomWidth: moderateScale(2),
+    borderBottomColor: '#4c4c4f'
+  },
   searchInput: {
     height: moderateScale(36),
     paddingLeft: moderateScale(10),
     flex: 1,
     fontSize: moderateScale(16),
-    borderBottomColor: '#4c4c4f',
-    borderBottomWidth: 2,
     color: '#eee'
   },
   buttonText: {
