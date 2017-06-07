@@ -74,7 +74,7 @@ class App extends Component {
 
   componentWillUnmount() {
     if (this.localStream !== undefined) {
-      this.localStream.getVideoTracks()[0].stop();
+      // this.localStream.getVideoTracks()[0].stop();
       this.localStream.release();
     }
     socket.emit('leave');

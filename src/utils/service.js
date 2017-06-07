@@ -15,30 +15,6 @@ function logError(error) {
   console.log("logError", error);
 }
 
-function sendData(msg) {
-  dc.send(JSON.stringify(msg));
-}
-function setupDataHandlers() {
-  dc.onmessage = e => {
-    var msg = JSON.parse(e.data);
-    console.log('received message over data channel:' + msg);
-  };
-  dc.onclose = () => {
-    remoteStream.getVideoTracks()[0].stop();
-    console.log('The Data Channel is Closed');
-  };
-}
-
-function setDescription(offer) {
-  return pc.setLocalDescription(offer);
-}
-
-  // send the offer to a server to be forwarded to the other peer
-function sendDescription(socket) {
-  socket.send(pc.localDescription);
-}
-
-let dc = null;
 let pc = null;
 let remoteStream = null;
 
@@ -60,7 +36,9 @@ export function initPC(state, socket, localStream, callback) {
 
     } else if (message.type === 'answer') {
       // set remote description
-      pc.setRemoteDescription(new RTCSessionDescription(message));
+      pc.setRemoteDescription(new RTCSessionDescription(message), function() {
+        console.log('--answer--');
+      });
     } else if (message.type === 'candidate') {
       // add ice candidate
       pc.addIceCandidate(
@@ -73,10 +51,7 @@ export function initPC(state, socket, localStream, callback) {
     }
   });
 
-  const attachMediaIfReady = () => {
-    dc = pc.createDataChannel('chat');
-    setupDataHandlers();
-    console.log('attachMediaIfReady')
+  const createOffer = () => {
     pc.createOffer(function(desc) {
       console.log('createOffer', desc);
       pc.setLocalDescription(desc, function () {
@@ -105,22 +80,37 @@ export function initPC(state, socket, localStream, callback) {
     remoteStream = e.stream;
     callback(remoteStream);
   };
-  pc.ondatachannel = e => {
-    // data channel
-    dc = e.channel;
-    setupDataHandlers();
-    sendData({
-      peerMediaStream: {
-        video: localStream.getVideoTracks()[0].enabled
-      }
-    });
-    //sendData('hello');
+
+  pc.oniceconnectionstatechange = e => {
+    console.log('oniceconnectionstatechange', e.target.iceConnectionState);
+    if (e.target.iceConnectionState === 'connected') {
+      // createDataChannel();
+    }
   };
+
+  pc.onnegotiationneeded = () => {
+    console.log('onnegotiationneeded');
+    createOffer();
+  };
+
   // attach local media to the peer connection
   pc.addStream(localStream);
-  if (state.user === 'host') {
-    getLocalStream(state.isFront, attachMediaIfReady)
-  }
+
+  const createDataChannel = () => {
+    if (pc.textDataChannel) {
+      return;
+    }
+    const dc = pc.createDataChannel("text");
+    dc.onmessage = e => {
+      var msg = JSON.parse(e.data);
+      console.log('received message over data channel:' + msg);
+    };
+    dc.onclose = () => {
+      remoteStream.getVideoTracks()[0].stop();
+      console.log('The Data Channel is Closed');
+    };
+    pc.textDataChannel = dc;
+  };
 
   return pc;
 }
