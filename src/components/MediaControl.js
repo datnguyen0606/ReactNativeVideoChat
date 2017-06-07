@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableHighlight } from 'react-native';
 import styles from "../../styles/control.js";
-
 import Svg, { Path } from 'react-native-svg';
-
-
-import { Platform } from 'react-native';
 
 export default class MediaControl extends Component {
   constructor(props) {

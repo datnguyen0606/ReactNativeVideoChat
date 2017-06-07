@@ -4,7 +4,7 @@ import { moderateScale } from '../src/utils/scaling';
 export default StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: moderateScale(20),
+    bottom: moderateScale(30),
     left: 0,
     right: 0,
     flexDirection: 'row',

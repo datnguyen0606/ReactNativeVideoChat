@@ -4,7 +4,7 @@ import Home from "./Home";
 import RoomContainer from "./RoomContainer";
 import { connect } from 'react-redux';
 
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, BackHandler } from 'react-native';
 
 import { getLocalStream, initPC } from '../utils/service.js'
 
@@ -22,26 +22,27 @@ class App extends Component {
 
   componentDidMount() {
     const container = this;
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      if (container.props.connection == "") {
+        return false;
+      } else {
+        container.hangUp();
+        return true;
+      }
+    });
+
     socket.on('create', () => {
-      getLocalStream(container.props.isFront, function(stream) {
-        container.localStream = stream;
-        container.props.dispatch(updateConnection({
-          user: "host",
-          connection: 'ready',
-          localVideoSrc: stream.toURL()
-        }));
-      });
+      container.props.dispatch(updateConnection({
+        user: "host",
+        connection: 'ready'
+      }));
     });
 
     socket.on('join', () => {
-      getLocalStream(container.props.isFront, function(stream) {
-        container.localStream = stream;
-        container.props.dispatch(updateConnection({
-          user: "guest",
-          connection: 'join',
-          localVideoSrc: stream.toURL()
-        }));
-      });
+      container.props.dispatch(updateConnection({
+        user: "guest",
+        connection: 'join'
+      }));
     });
 
     socket.on('approve', data => {
@@ -90,11 +91,19 @@ class App extends Component {
   }
 
   onJoinPressed = () => {
-    this.props.dispatch(updateConnection({
+    const container = this;
+    container.props.dispatch(updateConnection({
       connection: "connecting"
     }));
+
     // find existing or create new room
-    socket.emit('find', this.props.room);
+    socket.emit('find', container.props.room);
+    getLocalStream(container.props.isFront, function(stream) {
+      container.localStream = stream;
+      container.props.dispatch(updateConnection({
+        localVideoSrc: stream.toURL()
+      }));
+    });
   }
 
   onRandomPressed = () => {
@@ -139,7 +148,7 @@ class App extends Component {
     e.stopPropagation();
   }
 
-  hangUp = e => {
+  hangUp = () => {
     this.props.dispatch(initState());
     if (this.localStream !== undefined) {
       this.localStream.release();

@@ -6,6 +6,7 @@ const thumbnailHeight = parseInt(window.height / 6);
 
 
 export default {
+  // host: "https://ec2-34-224-79-164.compute-1.amazonaws.com:8080",
   host: "http://192.168.0.55:3030",
   video: {
     minWidth: 640,

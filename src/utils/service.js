@@ -40,7 +40,6 @@ function sendDescription(socket) {
 
 let dc = null;
 let pc = null;
-let localStream = null;
 let remoteStream = null;
 
 export function initPC(state, socket, localStream, callback) {
@@ -67,7 +66,8 @@ export function initPC(state, socket, localStream, callback) {
       pc.addIceCandidate(
         new RTCIceCandidate({
           sdpMLineIndex: message.mlineindex,
-          candidate: message.candidate
+          candidate: message.candidate,
+          sdpMid: message.sdpMid
         })
       );
     }
@@ -94,7 +94,8 @@ export function initPC(state, socket, localStream, callback) {
       socket.send({
         type: 'candidate',
         mlineindex: e.candidate.sdpMLineIndex,
-        candidate: e.candidate.candidate
+        candidate: e.candidate.candidate,
+        sdpMid: e.candidate.sdpMid
       });
     }
   };
