@@ -1,22 +1,21 @@
 import { StyleSheet } from 'react-native';
-import normalize from '../src/utils/normalizeText';
-
+import { moderateScale } from '../src/utils/scaling';
 
 export default StyleSheet.create({
   homeContainer: {
-    padding: normalize(30),
-    paddingTop: normalize(65),
+    padding: moderateScale(30),
+    paddingTop: moderateScale(65),
     alignItems: 'center'
   },
   description: {
-    marginBottom: normalize(15),
-    fontSize: normalize(17),
+    marginBottom: moderateScale(15),
+    fontSize: moderateScale(17),
     textAlign: 'center',
     color: '#eee'
   },
   header: {
-    marginBottom: normalize(20),
-    fontSize: normalize(28),
+    marginBottom: moderateScale(20),
+    fontSize: moderateScale(28),
     textAlign: 'center',
     color: '#eee',
     fontWeight: 'bold'
@@ -27,30 +26,30 @@ export default StyleSheet.create({
     alignSelf: 'stretch'
   },
   searchInput: {
-    height: normalize(36),
-    paddingLeft: normalize(10),
+    height: moderateScale(36),
+    paddingLeft: moderateScale(10),
     flex: 1,
-    fontSize: normalize(16),
+    fontSize: moderateScale(16),
     borderBottomColor: '#4c4c4f',
     borderBottomWidth: 2,
     color: '#eee'
   },
   buttonText: {
-    fontSize: normalize(16),
+    fontSize: moderateScale(16),
     color: '#eee',
     alignSelf: 'center'
   },
   button: {
-    height: normalize(36),
+    height: moderateScale(36),
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#4285f4',
-    marginBottom: normalize(10),
-    marginTop: normalize(15),
+    marginBottom: moderateScale(10),
+    marginTop: moderateScale(15),
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
   empty: {
-    width: normalize(10)
+    width: moderateScale(10)
   }
 });

@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
 import config from "../config/app.js";
 import { Platform } from 'react-native';
-import normalize from '../src/utils/normalizeText';
-
+import { moderateScale } from '../src/utils/scaling';
 
 export default StyleSheet.create({
   fullContainer: {
@@ -10,14 +9,14 @@ export default StyleSheet.create({
   },
   thumbnail: {
     position: "absolute",
-    right: normalize(10),
-    top: normalize(30),
+    right: moderateScale(10),
+    top: moderateScale(30),
     width: config.thumbnailWidth,
     height: config.thumbnailHeight
   },
   invitationSection: {
-    marginTop: normalize(30),
-    padding: normalize(10),
+    marginTop: moderateScale(30),
+    padding: moderateScale(10),
     flex: 1,
     position: "absolute",
     left: 0,
@@ -26,8 +25,8 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(51, 51, 51, 0.8)'
   },
   inputLabel: {
-    marginBottom: normalize(5),
-    fontSize: normalize(17),
+    marginBottom: moderateScale(5),
+    fontSize: moderateScale(17),
     color: '#eee'
   },
   flowLeft: {

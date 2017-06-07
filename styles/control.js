@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import normalize from '../src/utils/normalizeText';
+import { moderateScale } from '../src/utils/scaling';
 
 export default StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: normalize(20),
+    bottom: moderateScale(20),
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -13,23 +13,23 @@ export default StyleSheet.create({
   },
   button: {
     backgroundColor: 'rgba(44, 44, 44, 0.6)',
-    borderRadius: normalize(54)/2,
-    width: normalize(54),
-    height: normalize(54),
+    borderRadius: moderateScale(54)/2,
+    width: moderateScale(54),
+    height: moderateScale(54),
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: normalize(10),
-    marginRight: normalize(10)
+    marginLeft: moderateScale(10),
+    marginRight: moderateScale(10)
   },
   red: {
     backgroundColor: 'red'
   },
   svg: {
-    width: normalize(27),
-    height: normalize(27)
+    width: moderateScale(27),
+    height: moderateScale(27)
   },
   svg_camera: {
-    width: normalize(35),
-    height: normalize(35)
+    width: moderateScale(35),
+    height: moderateScale(35)
   }
 });
