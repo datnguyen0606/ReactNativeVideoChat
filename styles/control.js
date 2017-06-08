@@ -4,32 +4,33 @@ import { moderateScale } from '../src/utils/scaling';
 export default StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: moderateScale(30),
+    bottom: moderateScale(35),
     left: 0,
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 3
   },
   button: {
     backgroundColor: 'rgba(44, 44, 44, 0.6)',
-    borderRadius: moderateScale(54)/2,
-    width: moderateScale(54),
-    height: moderateScale(54),
+    borderRadius: moderateScale(60)/2,
+    width: moderateScale(60),
+    height: moderateScale(60),
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: moderateScale(10),
-    marginRight: moderateScale(10)
+    marginLeft: moderateScale(12),
+    marginRight: moderateScale(12)
   },
   red: {
     backgroundColor: 'red'
   },
   svg: {
-    width: moderateScale(27),
-    height: moderateScale(27)
+    width: moderateScale(32),
+    height: moderateScale(32)
   },
   svg_camera: {
-    width: moderateScale(35),
-    height: moderateScale(35)
+    width: moderateScale(38),
+    height: moderateScale(38)
   }
 });

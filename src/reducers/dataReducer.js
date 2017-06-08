@@ -6,14 +6,14 @@ import {
 } from '../constants'
 
 
-function genState() {
+function genState(room=null) {
   return {
     localVideoSrc: null,
     remoteVideoSrc: null,
     isFront: true,
     connection: "",
     user: "",
-    room: `${new Date() - new Date().setHours(0, 0, 0, 0)}`,
+    room: room || `${new Date() - new Date().setHours(0, 0, 0, 0)}`,
     message: "",
     sid: "",
     video: true,
@@ -28,7 +28,7 @@ const initialState = genState();
 export default function dataReducer(state = initialState, action) {
   switch (action.type) {
     case INIT_STATE:
-      return genState();
+      return genState(action.room);
     case UPDATE_CONNECTION:
     case SHOW_CONTROL:
       return Object.assign({}, state, action.data);

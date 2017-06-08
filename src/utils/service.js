@@ -20,6 +20,7 @@ let remoteStream = null;
 
 export function initPC(state, socket, localStream, callback) {
   socket.on('message', (message) => {
+    console.log("----", message.type);
     if (message.type === 'offer') {
       // set remote description and answer
       pc.setRemoteDescription(new RTCSessionDescription(message), function () {
@@ -30,7 +31,7 @@ export function initPC(state, socket, localStream, callback) {
             socket.send(pc.localDescription);
           }, logError);
         }, logError);
-      });
+      }, logError);
 
       // pc.setRemoteDescription(new RTCSessionDescription(message));
 
@@ -38,7 +39,7 @@ export function initPC(state, socket, localStream, callback) {
       // set remote description
       pc.setRemoteDescription(new RTCSessionDescription(message), function() {
         console.log('--answer--');
-      });
+      }, logError);
     } else if (message.type === 'candidate') {
       // add ice candidate
       pc.addIceCandidate(

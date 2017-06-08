@@ -5,14 +5,16 @@ import { moderateScale } from '../src/utils/scaling';
 
 export default StyleSheet.create({
   fullContainer: {
-    flex: 1
+    flex: 1,
+    zIndex: 0
   },
   thumbnail: {
     position: "absolute",
     right: moderateScale(10),
     top: moderateScale(30),
     width: config.thumbnailWidth,
-    height: config.thumbnailHeight
+    height: config.thumbnailHeight,
+    zIndex: 1
   },
   invitationSection: {
     marginTop: moderateScale(30),

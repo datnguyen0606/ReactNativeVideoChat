@@ -64,6 +64,11 @@ class App extends Component {
     });
 
     socket.on('hangup', () => {
+      if (container.pc) {
+        container.pc.close();
+        container.pc = null;
+      }
+
       container.props.dispatch(updateConnection({
         user: 'host',
         connection: "host-hangup",
@@ -72,12 +77,25 @@ class App extends Component {
     });
   }
 
-  componentWillUnmount() {
+  leaveCall = () => {
     if (this.localStream !== undefined) {
-      // this.localStream.getVideoTracks()[0].stop();
       this.localStream.release();
+      //this.localStream.getVideoTracks()[0].stop();
+    }
+    if (this.pc) {
+      this.pc.close();
+      this.pc = null;
     }
     socket.emit('leave');
+  }
+
+  componentWillUnmount() {
+    this.leaveCall();
+  }
+
+  hangUp = () => {
+    this.props.dispatch(initState(this.props.room));
+    this.leaveCall();
   }
 
   resetAuth() {
@@ -146,18 +164,6 @@ class App extends Component {
       this.props.dispatch(showControl({video: video}));
     }
     e.stopPropagation();
-  }
-
-  hangUp = () => {
-    this.props.dispatch(initState());
-    if (this.localStream !== undefined) {
-      this.localStream.release();
-      //this.localStream.getVideoTracks()[0].stop();
-    }
-    if (this.pc) {
-      this.pc.close();
-    }
-    socket.emit('leave');
   }
 
   toggleControl = e => {

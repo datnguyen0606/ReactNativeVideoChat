@@ -24,7 +24,7 @@ export default class RoomContainer extends Component {
 
         {this.props.connection == "established" ?
           (
-            <RTCView streamURL={this.props.remoteVideoSrc} style={styles.fullContainer} />
+            <RTCView mirror={true} streamURL={this.props.remoteVideoSrc} style={styles.fullContainer} />
           ) : null }
 
         {this.props.showControl ? (

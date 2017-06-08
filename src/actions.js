@@ -26,8 +26,9 @@ export function showControl(data) {
   }
 }
 
-export function initState() {
+export function initState(room) {
   return {
-    type: INIT_STATE
+    type: INIT_STATE,
+    room: room
   }
 }
